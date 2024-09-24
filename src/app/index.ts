@@ -8,7 +8,7 @@ import fastifyApiReference from "@scalar/fastify-api-reference";
 
 import { errorMiddleware } from "@/middleware/error-middleware";
 import { appRoutes } from "@/modules/app-routes";
-import { logsHook } from "@/utils/http-logs";
+import { onResponseLogs } from "@/utils/http-logs";
 
 const app = fastify({
   logger: {
@@ -40,7 +40,7 @@ app.register(fastifyApiReference, {
 });
 
 app.setErrorHandler(errorMiddleware);
-app.addHook("onResponse", logsHook);
+app.addHook("onResponse", onResponseLogs);
 app.register(appRoutes);
 
 const logger = app.log;
