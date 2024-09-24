@@ -32,6 +32,11 @@
                     "message": {
                       "type": "string",
                       "example": "server is running"
+                    },
+
+                    "documentation": {
+                      "type": "string",
+                      "example": "/docs"
                     }
                   }
                 }
