@@ -1,0 +1,45 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Template api doc",
+    "description": "Lorem ipsum",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Suporte",
+      "url": "http://suporteapi.com",
+      "email": "john.doe@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "local development server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "health check route",
+        "tags": ["Health check"],
+        "responses": {
+          "200": {
+            "description": "route to validate that the server is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "server is running"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
