@@ -8,14 +8,12 @@ export function onResponseLogs(
 ) {
   const { statusCode } = reply;
 
-  const currentDate = new Date();
-
   const logData = {
     method: req.method,
     url: req.url,
     statusCode: reply.statusCode,
     responseTime: reply.elapsedTime,
-    date: currentDate,
+    date: new Date(),
   };
 
   if (statusCode >= 200 && statusCode <= 299) {
