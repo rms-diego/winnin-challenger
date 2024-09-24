@@ -3,7 +3,7 @@ import { Exception } from "@/utils/exception";
 
 export function errorMiddleware(
   err: FastifyError,
-  req: FastifyRequest,
+  _req: FastifyRequest,
   reply: FastifyReply,
 ) {
   if (err instanceof Exception) {
