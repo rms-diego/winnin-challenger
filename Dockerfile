@@ -1,8 +1,8 @@
-FROM node:alpine
+FROM node:20-alpine
 
 COPY . .
 
-RUN npm ci
+RUN npm install --production
 
 RUN npm run build
 
