@@ -8,12 +8,27 @@ import fastifyApiReference from "@scalar/fastify-api-reference";
 
 import { errorMiddleware } from "@/middleware/error-middleware";
 import { appRoutes } from "@/modules/app-routes";
-import { onRequest, onResponse } from "@/utils/http-logs";
+import { logsHook } from "@/utils/http-logs";
 
-const app = fastify();
+const app = fastify({
+  logger: {
+    level: "info",
+    transport: {
+      target: "pino-pretty",
+      options: {
+        colorize: true,
+        translateTime: "HH:MM:ss.l",
+        ignore: "pid,hostname",
+        singleLine: true,
+      },
+    },
+  },
+  disableRequestLogging: true,
+});
 
 app.register(helmet, { global: true });
 app.register(cors);
+
 app.register(fastifyApiReference, {
   routePrefix: "/docs",
   configuration: {
@@ -24,11 +39,10 @@ app.register(fastifyApiReference, {
   },
 });
 
-// http middlewares
-app.addHook("onRequest", onRequest);
-app.addHook("onResponse", onResponse);
-
 app.setErrorHandler(errorMiddleware);
+app.addHook("onResponse", logsHook);
 app.register(appRoutes);
 
-export { app };
+const logger = app.log;
+
+export { app, logger };

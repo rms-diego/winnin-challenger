@@ -2,7 +2,7 @@
   "name": "backend-template",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
     "build": "tsup",
     "dev": "tsx watch src/server.ts",
@@ -21,7 +21,7 @@
     "@scalar/fastify-api-reference": "^1.24.65",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
-    "winston": "^3.13.1",
+    "pino-pretty": "^11.2.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {

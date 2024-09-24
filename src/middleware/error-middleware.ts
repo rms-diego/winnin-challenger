@@ -1,6 +1,6 @@
 import { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 import { Exception } from "@/utils/exception";
-import { logger } from "@/utils/logger";
+import { logger } from "@/app";
 import { env } from "@/utils/env";
 
 export function errorMiddleware(

@@ -1,6 +1,6 @@
 import { app } from "@/app";
 import { env } from "@/utils/env";
-import { logger } from "./utils/logger";
+import { logger } from "./app";
 
 async function main() {
   const address = await app.listen({ port: env.PORT });
