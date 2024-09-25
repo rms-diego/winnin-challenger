@@ -12,8 +12,8 @@ async function main() {
     throw new Error("Make sure your database server is running");
   }
 
+  logger.info("Connected to postgres");
   await app.listen({ host: "0.0.0.0", port: env.PORT });
-  logger.info("Connected to postgres\n");
 
   // cron job
   cron.schedule("*/1 * * * *", () => redditService.fetchPostsFromReddit());
