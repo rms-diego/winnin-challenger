@@ -12,16 +12,12 @@ async function main() {
     throw new Error("Make sure your database server is running");
   }
 
-  await app.listen({ port: env.PORT });
+  await app.listen({ host: "0.0.0.0", port: env.PORT });
   logger.info("Connected to postgres\n");
 
-  // cron jobs
+  // cron job
   cron.schedule("*/1 * * * *", () => redditService.fetchPostsFromReddit());
-
-  // Cron job que dispara a cada 12 horas
-  // cron.schedule("0 */12 * * *", () => {
-  //   console.log("Tarefa executada a cada 12 horas");
-  // });
+  // cron.schedule("0 0 * * *", () => redditService.fetchPostsFromReddit());
 }
 
 main();
