@@ -8,7 +8,7 @@ export class RedditController {
   public findPostsInRange = async (
     req: FastifyRequest,
     reply: FastifyReply,
-  ) => {
+  ): Promise<FastifyReply> => {
     const { startedAt, finishedAt, sortBy } = findPostsInRangeSchema.parse(
       req.query,
     );

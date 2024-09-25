@@ -1,16 +1,17 @@
+import { posts as Posts } from "@prisma/client";
 import { logger } from "@/app";
+import { RedditRepository } from "../repository";
+import { Exception } from "@/utils/exception";
 import {
   FindPostsInRangeDTO,
   redditChildrenSchema,
   ResponseReddit,
 } from "../@types";
-import { RedditRepository } from "../repository";
-import { Exception } from "@/utils/exception";
 
 export class RedditService {
   constructor(private readonly redditRepository: RedditRepository) {}
 
-  public fetchPostsFromReddit = async () => {
+  public fetchPostsFromReddit = async (): Promise<void> => {
     logger.info("start fetch data from reddit");
     const res = await fetch("https://api.reddit.com/r/artificial/hot");
 
@@ -35,7 +36,9 @@ export class RedditService {
     logger.info("finish fetch data from reddit\n");
   };
 
-  public findPostsInRange = async (params: FindPostsInRangeDTO) => {
+  public findPostsInRange = async (
+    params: FindPostsInRangeDTO,
+  ): Promise<Posts[]> => {
     const posts = await this.redditRepository.findPostsInRange(params);
 
     if (!posts.length) {

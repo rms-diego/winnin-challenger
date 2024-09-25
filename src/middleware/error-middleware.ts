@@ -3,7 +3,7 @@ import { ZodError } from "zod";
 import { Exception } from "@/utils/exception";
 
 export function errorMiddleware(
-  err: FastifyError,
+  err: FastifyError | ZodError | Exception,
   _req: FastifyRequest,
   reply: FastifyReply,
 ) {
