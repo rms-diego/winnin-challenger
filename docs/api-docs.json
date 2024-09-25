@@ -1,18 +1,17 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Template api doc",
-    "description": "Lorem ipsum",
+    "title": "Winnin challenger",
     "version": "1.0.0",
     "contact": {
-      "name": "Suporte",
+      "name": "Diego Ramos",
       "url": "http://suporteapi.com",
-      "email": "john.doe@gmail.com"
+      "email": "diegorbrito9@gmail.com"
     }
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
+      "url": "http://localhost:3333",
       "description": "local development server"
     }
   ],
@@ -49,8 +48,8 @@
 
     "/posts/range": {
       "get": {
-        "summary": "Find posts within a specific date range",
-        "description": "Retrieves posts created within the given date range and optionally sorted by a specific field.",
+        "summary": "Find posts within a specific date range and sorted by a specific field.",
+        "description": "Retrieves posts created within the given date range and sorted by a specific field.",
         "tags": ["Posts"],
         "parameters": [
           {
@@ -60,7 +59,8 @@
             "description": "The start date for the range filter (ISO format).",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2024-09-25T00:00:00"
             }
           },
           {
@@ -70,7 +70,8 @@
             "description": "The end date for the range filter (ISO format).",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "example": "2024-09-25T00:00:00"
             }
           },
           {
@@ -80,7 +81,8 @@
             "description": "sorting field, e.g., 'ups', 'commentsQuantity'.",
             "schema": {
               "type": "string",
-              "enum": ["ups", "commentsQuantity"]
+              "enum": ["ups", "commentsQuantity"],
+              "example": "ups"
             }
           }
         ],
@@ -178,6 +180,106 @@
                         {
                           "property": "finishedAt",
                           "message": "finishedAt is required"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/posts": {
+      "get": {
+        "summary": "Find many posts sorted by a specific field.",
+        "description": "Retrieves posts created sorted by a specific field.",
+        "tags": ["Posts"],
+        "parameters": [
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": true,
+            "description": "sorting field, e.g., 'ups', 'commentsQuantity'.",
+            "schema": {
+              "type": "string",
+              "enum": ["ups", "commentsQuantity"],
+              "example": "ups"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of posts sorted by a specific field.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "commentsQuantity": {
+                        "type": "integer",
+                        "description": "The number of comments on the post."
+                      },
+                      "ups": {
+                        "type": "integer",
+                        "description": "The number of up votes the post received."
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the post."
+                      },
+                      "authorFullName": {
+                        "type": "string",
+                        "description": "The full name of the post's author."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "The title of the post."
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The creation date of the post (ISO format)."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "404": {
+            "description": "no posts found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_date": {
+                    "summary": "no posts found",
+                    "value": {
+                      "error": "no posts found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "400": {
+            "description": "Invalid request parameters.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_sortBy": {
+                    "summary": "Invalid sortBy parameter",
+                    "value": {
+                      "error": [
+                        {
+                          "property": "sortBy",
+                          "message": "is missing property or sortBy must be either 'commentsQuantity' or 'ups' or is missing property"
                         }
                       ]
                     }
