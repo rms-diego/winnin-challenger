@@ -11,6 +11,9 @@ describe("GET / - Health check test cases", () => {
 
   test("it should be able to get health check message", async () => {
     const { body } = await request.get("/").expect(200);
-    expect(body).toEqual({ message: "server is running" });
+    expect(body).toEqual({
+      message: "server is running",
+      documentation: "/docs",
+    });
   });
 });
