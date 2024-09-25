@@ -53,3 +53,14 @@ export const findPostsInRangeSchema = zod.object({
 });
 
 export type FindPostsInRangeDTO = Zod.infer<typeof findPostsInRangeSchema>;
+
+// find many
+export const findManyPostsSchema = zod.object({
+  sortBy: zod.enum(["commentsQuantity", "ups"], {
+    errorMap: () => ({
+      message: "sortBy must be either 'commentsQuantity' or 'ups'",
+    }),
+  }),
+});
+
+export type FindManyPostsDTO = Zod.infer<typeof findManyPostsSchema>;

@@ -1,5 +1,9 @@
 import { PrismaClient, posts as Posts } from "@prisma/client";
-import { CreateManyDTO, FindPostsInRangeDTO } from "../@types";
+import {
+  CreateManyDTO,
+  FindManyPostsDTO,
+  FindPostsInRangeDTO,
+} from "../@types";
 
 export class RedditRepository {
   constructor(private readonly prismaClient: PrismaClient) {}
@@ -15,6 +19,14 @@ export class RedditRepository {
       where: {
         createdAt: { gte: params.startedAt, lte: params.finishedAt },
       },
+      orderBy: { [params.sortBy]: "desc" },
+    });
+
+    return postsFound;
+  };
+
+  public findManyPosts = async (params: FindManyPostsDTO): Promise<Posts[]> => {
+    const postsFound = await this.prismaClient.posts.findMany({
       orderBy: { [params.sortBy]: "desc" },
     });
 

@@ -10,7 +10,8 @@ const redditService = new RedditService(redditRepository);
 const redditController = new RedditController(redditService);
 
 async function redditRoutes(app: FastifyInstance) {
-  app.get("/", redditController.findPostsInRange);
+  app.get("/range", redditController.findPostsInRange);
+  app.get("/", redditController.findMany);
 }
 
 export { redditRepository, redditService, redditRoutes };

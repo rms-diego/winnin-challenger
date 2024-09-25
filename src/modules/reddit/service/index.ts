@@ -3,6 +3,7 @@ import { logger } from "@/app";
 import { RedditRepository } from "../repository";
 import { Exception } from "@/utils/exception";
 import {
+  FindManyPostsDTO,
   FindPostsInRangeDTO,
   redditChildrenSchema,
   ResponseReddit,
@@ -43,6 +44,16 @@ export class RedditService {
 
     if (!posts.length) {
       throw new Exception("no post was found in the range ", 404);
+    }
+
+    return posts;
+  };
+
+  public findManyPosts = async (params: FindManyPostsDTO): Promise<Posts[]> => {
+    const posts = await this.redditRepository.findManyPosts(params);
+
+    if (!posts.length) {
+      throw new Exception("no posts found", 404);
     }
 
     return posts;
