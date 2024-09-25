@@ -43,7 +43,7 @@ export class RedditService {
     const posts = await this.redditRepository.findPostsInRange(params);
 
     if (!posts.length) {
-      throw new Exception("no post was found in the range ", 404);
+      throw new Exception("no post was found in the range", 404);
     }
 
     return posts;
