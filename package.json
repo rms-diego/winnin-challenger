@@ -10,7 +10,8 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "coverage": "vitest run --coverage",
-    "test": "vitest"
+    "test": "vitest",
+    "db:reset": "prisma db push --force-reset"
   },
   "keywords": [],
   "author": "",
