@@ -16,6 +16,8 @@ export function onResponseLogs(
     date: new Date(),
   };
 
+  if (statusCode >= 300 && statusCode <= 399) return done();
+
   if (statusCode >= 200 && statusCode <= 299) {
     logger.info(logData);
     return done();
