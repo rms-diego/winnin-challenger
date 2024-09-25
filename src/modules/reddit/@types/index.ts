@@ -59,7 +59,8 @@ export type FindPostsInRangeDTO = Zod.infer<typeof findPostsInRangeSchema>;
 export const findManyPostsSchema = zod.object({
   sortBy: zod.enum(["commentsQuantity", "ups"], {
     errorMap: () => ({
-      message: "sortBy must be either 'commentsQuantity' or 'ups'",
+      message:
+        "is missing property or sortBy must be either 'commentsQuantity' or 'ups' or is missing property",
     }),
   }),
 });
