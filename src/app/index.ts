@@ -6,25 +6,12 @@ import apiDocs from "@docs/api-docs.json";
 
 import fastifyApiReference from "@scalar/fastify-api-reference";
 
+import { loggerConfig } from "@/utils/logger-config";
 import { errorMiddleware } from "@/middleware/error-middleware";
 import { appRoutes } from "@/modules/app-routes";
 import { onResponseLogs } from "@/utils/http-logs";
 
-const app = fastify({
-  logger: {
-    level: "info",
-    transport: {
-      target: "pino-pretty",
-      options: {
-        colorize: true,
-        translateTime: "yyyy-mm-dd HH:MM:ss",
-        ignore: "pid,hostname",
-        singleLine: true,
-      },
-    },
-  },
-  disableRequestLogging: true,
-});
+const app = fastify({ logger: loggerConfig, disableRequestLogging: true });
 const logger = app.log;
 
 app.register(helmet, { global: true });
