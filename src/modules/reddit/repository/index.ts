@@ -20,6 +20,7 @@ export class RedditRepository {
         createdAt: { gte: params.startedAt, lte: params.finishedAt },
       },
       orderBy: { [params.sortBy]: "desc" },
+      take: 100,
     });
 
     return postsFound;
@@ -28,6 +29,7 @@ export class RedditRepository {
   public findManyPosts = async (params: FindManyPostsDTO): Promise<Posts[]> => {
     const postsFound = await this.prismaClient.posts.findMany({
       orderBy: { [params.sortBy]: "desc" },
+      take: 100,
     });
 
     return postsFound;
