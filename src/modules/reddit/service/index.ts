@@ -1,6 +1,11 @@
 import { logger } from "@/app";
-import { redditChildrenSchema, ResponseReddit } from "../@types";
+import {
+  FindPostsInRangeDTO,
+  redditChildrenSchema,
+  ResponseReddit,
+} from "../@types";
 import { RedditRepository } from "../repository";
+import { Exception } from "@/utils/exception";
 
 export class RedditService {
   constructor(private readonly redditRepository: RedditRepository) {}
@@ -28,5 +33,15 @@ export class RedditService {
 
     await this.redditRepository.createMany(serializedRedditPosts);
     logger.info("finish fetch data from reddit\n");
+  };
+
+  public findPostsInRange = async (params: FindPostsInRangeDTO) => {
+    const posts = await this.redditRepository.findPostsInRange(params);
+
+    if (!posts.length) {
+      throw new Exception("no post was found in the range ", 404);
+    }
+
+    return posts;
   };
 }

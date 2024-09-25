@@ -28,3 +28,28 @@ export type CreateManyDTO = {
   commentsQuantity: number;
   title: string;
 }[];
+
+// find posts in range
+export const findPostsInRangeSchema = zod.object({
+  startedAt: zod
+    .string({ required_error: "startedAt is required" })
+    .transform((startedAt) => new Date(startedAt))
+    .refine((startedAt) => startedAt.toString() !== "Invalid Date", {
+      message: "invalid date",
+    }),
+
+  finishedAt: zod
+    .string({ required_error: "finishedAt is required" })
+    .transform((finishedAt) => new Date(finishedAt))
+    .refine((finishedAt) => finishedAt.toString() !== "Invalid Date", {
+      message: "invalid date",
+    }),
+
+  sortBy: zod.enum(["commentsQuantity", "ups"], {
+    errorMap: () => ({
+      message: "sortBy must be either 'commentsQuantity' or 'ups'",
+    }),
+  }),
+});
+
+export type FindPostsInRangeDTO = Zod.infer<typeof findPostsInRangeSchema>;
