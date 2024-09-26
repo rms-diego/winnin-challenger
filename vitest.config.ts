@@ -5,6 +5,8 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
-    // Outras configurações do Vitest, se necessário
+    coverage: {
+      provider: "istanbul", // or 'v8'
+    },
   },
 });
