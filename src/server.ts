@@ -16,8 +16,8 @@ async function main() {
   await app.listen({ host: "0.0.0.0", port: env.PORT });
 
   // cron job
-  cron.schedule("*/10 * * * *", () => redditService.fetchPostsFromReddit());
-  // cron.schedule("0 0 * * *", () => redditService.fetchPostsFromReddit());
+  // cron.schedule("*/10 * * * *", () => redditService.fetchPostsFromReddit());
+  cron.schedule("0 0 * * *", () => redditService.fetchPostsFromReddit());
 }
 
 main();
