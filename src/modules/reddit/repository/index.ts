@@ -21,7 +21,7 @@ export class RedditRepository {
       },
       orderBy: { [params.sortBy]: "desc" },
       take: params.postsQuantity,
-      skip: params.postsQuantity,
+      skip: params.skippedPosts,
     });
 
     return postsFound;
@@ -33,7 +33,7 @@ export class RedditRepository {
     const postsFound = await this.prismaClient.posts.findMany({
       orderBy: { [params.sortBy]: "desc" },
       take: params.postsQuantity,
-      skip: params.postsQuantity,
+      skip: params.skippedPosts,
     });
 
     return postsFound;
