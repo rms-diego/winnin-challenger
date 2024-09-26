@@ -46,7 +46,7 @@ export const mockFindPostsInRange: {
   startedAt: Date;
   sortBy: "ups" | "commentsQuantity";
 } = {
-  pageNumber: 0,
+  pageNumber: 1,
   postsQuantity: 100,
   skippedPosts: 0,
   finishedAt: new Date("2024-09-26 00:00:00"),
@@ -60,7 +60,7 @@ export const mockFindManyPosts: {
   skippedPosts: number;
   sortBy: "ups" | "commentsQuantity";
 } = {
-  pageNumber: 0,
+  pageNumber: 1,
   postsQuantity: 100,
   skippedPosts: 0,
   sortBy: "commentsQuantity",
