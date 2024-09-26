@@ -1,3 +1,4 @@
+import { posts as Posts } from "@prisma/client";
 import { z as zod } from "zod";
 
 // Reddit request types
@@ -51,6 +52,8 @@ export const findPostsInRangeSchema = zod.object({
         "is missing property or sortBy must be either 'commentsQuantity' or 'ups' or is missing property",
     }),
   }),
+
+  postsQuantity: zod.number({ message: "must be a number" }).default(100),
 });
 
 export type FindPostsInRangeDTO = Zod.infer<typeof findPostsInRangeSchema>;
@@ -63,6 +66,13 @@ export const findManyPostsSchema = zod.object({
         "is missing property or sortBy must be either 'commentsQuantity' or 'ups' or is missing property",
     }),
   }),
+
+  postsQuantity: zod.number({ message: "must be a number" }).default(100),
 });
 
 export type FindManyPostsDTO = Zod.infer<typeof findManyPostsSchema>;
+
+export type PostsFoundDTO = {
+  postsQuantity: number;
+  posts: Posts[];
+};

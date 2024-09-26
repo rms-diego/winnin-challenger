@@ -9,14 +9,14 @@ export class RedditController {
     req: FastifyRequest,
     reply: FastifyReply,
   ): Promise<FastifyReply> => {
-    const { startedAt, finishedAt, sortBy } = findPostsInRangeSchema.parse(
-      req.query,
-    );
+    const { startedAt, finishedAt, sortBy, postsQuantity } =
+      findPostsInRangeSchema.parse(req.query);
 
     const posts = await this.redditService.findPostsInRange({
       startedAt,
       finishedAt,
       sortBy,
+      postsQuantity,
     });
 
     return reply.status(200).send(posts);
@@ -26,9 +26,12 @@ export class RedditController {
     req: FastifyRequest,
     reply: FastifyReply,
   ): Promise<FastifyReply> => {
-    const { sortBy } = findManyPostsSchema.parse(req.query);
+    const { sortBy, postsQuantity } = findManyPostsSchema.parse(req.query);
 
-    const posts = await this.redditService.findManyPosts({ sortBy });
+    const posts = await this.redditService.findManyPosts({
+      sortBy,
+      postsQuantity,
+    });
 
     return reply.status(200).send(posts);
   };

@@ -1,10 +1,10 @@
-import { posts as Posts } from "@prisma/client";
 import { logger } from "@/app";
 import { RedditRepository } from "../repository";
 import { Exception } from "@/utils/exception";
 import {
   FindManyPostsDTO,
   FindPostsInRangeDTO,
+  PostsFoundDTO,
   redditChildrenSchema,
   ResponseReddit,
 } from "../@types";
@@ -39,23 +39,25 @@ export class RedditService {
 
   public findPostsInRange = async (
     params: FindPostsInRangeDTO,
-  ): Promise<Posts[]> => {
+  ): Promise<PostsFoundDTO> => {
     const posts = await this.redditRepository.findPostsInRange(params);
 
     if (!posts.length) {
       throw new Exception("no post was found in the range", 404);
     }
 
-    return posts;
+    return { postsQuantity: params.postsQuantity, posts };
   };
 
-  public findManyPosts = async (params: FindManyPostsDTO): Promise<Posts[]> => {
+  public findManyPosts = async (
+    params: FindManyPostsDTO,
+  ): Promise<PostsFoundDTO> => {
     const posts = await this.redditRepository.findManyPosts(params);
 
     if (!posts.length) {
       throw new Exception("no posts found", 404);
     }
 
-    return posts;
+    return { postsQuantity: params.postsQuantity, posts };
   };
 }
