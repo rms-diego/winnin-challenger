@@ -1,4 +1,3 @@
-import { logger } from "@/app";
 import { RedditRepository } from "../repository";
 import { Exception } from "@/utils/exception";
 import {
@@ -13,7 +12,6 @@ export class RedditService {
   constructor(private readonly redditRepository: RedditRepository) {}
 
   public fetchPostsFromReddit = async (): Promise<void> => {
-    logger.info("start fetch data from reddit");
     const res = await fetch("https://api.reddit.com/r/artificial/hot");
 
     const {
@@ -34,7 +32,6 @@ export class RedditService {
     });
 
     await this.redditRepository.createMany(serializedRedditPosts);
-    logger.info("finish fetch data from reddit\n");
   };
 
   public findPostsInRange = async (
