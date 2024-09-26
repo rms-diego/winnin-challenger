@@ -11,6 +11,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "coverage": "vitest run --coverage",
     "test": "vitest",
+    "db:create": "prisma migrate deploy",
     "db:reset": "prisma db push --force-reset"
   },
   "keywords": [],
