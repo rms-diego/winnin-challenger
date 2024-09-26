@@ -11,6 +11,10 @@
   },
   "servers": [
     {
+      "url": "https://winnin-challenger.rms-diego.cloud/",
+      "description": "production server server"
+    },
+    {
       "url": "http://localhost:3333",
       "description": "local development server"
     }
