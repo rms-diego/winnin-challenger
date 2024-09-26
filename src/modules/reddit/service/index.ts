@@ -51,7 +51,11 @@ export class RedditService {
       throw new Exception("no post was found in the range", 404);
     }
 
-    return { postsQuantity: params.postsQuantity, posts };
+    return {
+      postsQuantity: posts.length,
+      currentPage: params.pageNumber,
+      posts,
+    };
   };
 
   public findManyPosts = async (
@@ -68,6 +72,10 @@ export class RedditService {
       throw new Exception("no posts found", 404);
     }
 
-    return { postsQuantity: params.postsQuantity, posts };
+    return {
+      postsQuantity: posts.length,
+      currentPage: params.pageNumber,
+      posts,
+    };
   };
 }

@@ -100,5 +100,6 @@ export type FindManyPostsRepositoryDTO = Zod.infer<
 
 export type PostsFoundDTO = {
   postsQuantity: number;
+  currentPage: number;
   posts: Posts[];
 };
