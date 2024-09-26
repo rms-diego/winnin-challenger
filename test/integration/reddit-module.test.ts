@@ -209,7 +209,6 @@ describe("Integration test reddit module ", () => {
 
     test("it should be throw when pass does not pass query params", async () => {
       const { body: error } = await request.get("/posts").expect(400);
-      console.log(error);
 
       expect(true).toBe(true);
       expect(error).toEqual({
