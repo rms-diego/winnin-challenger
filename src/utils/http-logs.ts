@@ -1,11 +1,15 @@
 import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from "fastify";
 import { logger } from "@/app";
+import { env } from "./env";
 
 export function onResponseLogs(
   req: FastifyRequest,
   reply: FastifyReply,
   done: HookHandlerDoneFunction,
 ) {
+  const { NODE_ENV } = env;
+  if (NODE_ENV === "test") return done();
+
   const { statusCode } = reply;
 
   const logData = {
