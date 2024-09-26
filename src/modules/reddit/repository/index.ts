@@ -1,8 +1,8 @@
 import { PrismaClient, posts as Posts } from "@prisma/client";
 import {
   CreateManyDTO,
-  FindManyPostsDTO,
-  FindPostsInRangeDTO,
+  FindPostsInRangeRepositoryDTO,
+  FindManyPostsRepositoryDTO,
 } from "../@types";
 
 export class RedditRepository {
@@ -13,7 +13,7 @@ export class RedditRepository {
   };
 
   public findPostsInRange = async (
-    params: FindPostsInRangeDTO,
+    params: FindPostsInRangeRepositoryDTO,
   ): Promise<Posts[]> => {
     const postsFound = await this.prismaClient.posts.findMany({
       where: {
@@ -21,15 +21,19 @@ export class RedditRepository {
       },
       orderBy: { [params.sortBy]: "desc" },
       take: params.postsQuantity,
+      skip: params.postsQuantity,
     });
 
     return postsFound;
   };
 
-  public findManyPosts = async (params: FindManyPostsDTO): Promise<Posts[]> => {
+  public findManyPosts = async (
+    params: FindManyPostsRepositoryDTO,
+  ): Promise<Posts[]> => {
     const postsFound = await this.prismaClient.posts.findMany({
       orderBy: { [params.sortBy]: "desc" },
       take: params.postsQuantity,
+      skip: params.postsQuantity,
     });
 
     return postsFound;

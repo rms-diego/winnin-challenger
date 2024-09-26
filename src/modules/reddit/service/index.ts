@@ -40,7 +40,12 @@ export class RedditService {
   public findPostsInRange = async (
     params: FindPostsInRangeDTO,
   ): Promise<PostsFoundDTO> => {
-    const posts = await this.redditRepository.findPostsInRange(params);
+    const skippedPosts = (params.pageNumber - 1) * params.postsQuantity;
+
+    const posts = await this.redditRepository.findPostsInRange({
+      ...params,
+      skippedPosts,
+    });
 
     if (!posts.length) {
       throw new Exception("no post was found in the range", 404);
@@ -52,7 +57,12 @@ export class RedditService {
   public findManyPosts = async (
     params: FindManyPostsDTO,
   ): Promise<PostsFoundDTO> => {
-    const posts = await this.redditRepository.findManyPosts(params);
+    const skippedPosts = (params.pageNumber - 1) * params.postsQuantity;
+
+    const posts = await this.redditRepository.findManyPosts({
+      ...params,
+      skippedPosts,
+    });
 
     if (!posts.length) {
       throw new Exception("no posts found", 404);

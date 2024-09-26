@@ -53,10 +53,23 @@ export const findPostsInRangeSchema = zod.object({
     }),
   }),
 
-  postsQuantity: zod.number({ message: "must be a number" }).default(100),
+  postsQuantity: zod
+    .number({ message: "must be a number" })
+    .min(1, "must  be greater than or equal 1")
+    .default(100),
+
+  pageNumber: zod
+    .number({ message: "must be a number" })
+    .min(1, "must be greater than or equal 1")
+    .default(1),
 });
 
 export type FindPostsInRangeDTO = Zod.infer<typeof findPostsInRangeSchema>;
+export type FindPostsInRangeRepositoryDTO = Zod.infer<
+  typeof findPostsInRangeSchema
+> & {
+  skippedPosts: number;
+};
 
 // find many
 export const findManyPostsSchema = zod.object({
@@ -67,10 +80,23 @@ export const findManyPostsSchema = zod.object({
     }),
   }),
 
-  postsQuantity: zod.number({ message: "must be a number" }).default(100),
+  postsQuantity: zod
+    .number({ message: "must be a number" })
+    .min(1, "must be greater than or equal 1")
+    .default(100),
+
+  pageNumber: zod
+    .number({ message: "must be a number" })
+    .min(1, "must be greater than or equal 1")
+    .default(1),
 });
 
 export type FindManyPostsDTO = Zod.infer<typeof findManyPostsSchema>;
+export type FindManyPostsRepositoryDTO = Zod.infer<
+  typeof findManyPostsSchema
+> & {
+  skippedPosts: number;
+};
 
 export type PostsFoundDTO = {
   postsQuantity: number;
