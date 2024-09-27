@@ -53,12 +53,12 @@ export const findPostsInRangeSchema = zod.object({
     }),
   }),
 
-  postsQuantity: zod
+  postsQuantity: zod.coerce
     .number({ message: "must be a number" })
     .min(1, "must  be greater than or equal 1")
     .default(100),
 
-  pageNumber: zod
+  pageNumber: zod.coerce
     .number({ message: "must be a number" })
     .min(1, "must be greater than or equal 1")
     .default(1),
@@ -80,12 +80,12 @@ export const findManyPostsSchema = zod.object({
     }),
   }),
 
-  postsQuantity: zod
+  postsQuantity: zod.coerce
     .number({ message: "must be a number" })
     .min(1, "must be greater than or equal 1")
     .default(100),
 
-  pageNumber: zod
+  pageNumber: zod.coerce
     .number({ message: "must be a number" })
     .min(1, "must be greater than or equal 1")
     .default(1),
