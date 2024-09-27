@@ -1,5 +1,24 @@
 import { randomUUID } from "crypto";
 
+// mock fetch data from reddit
+export const responseFromRedditMock = {
+  kind: "Listing",
+  data: {
+    children: [
+      {
+        kind: "foo",
+        data: {
+          ups: 20,
+          author_fullname: "foo",
+          created_utc: parseFloat("1727372459"),
+          num_comments: 20,
+          title: "lorem ipsum",
+        },
+      },
+    ],
+  },
+};
+
 // reddit repository
 export const mockPostsFound = [
   {
