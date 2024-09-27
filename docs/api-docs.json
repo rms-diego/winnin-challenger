@@ -12,7 +12,7 @@
   "servers": [
     {
       "url": "https://winnin-challenger.rms-diego.cloud/",
-      "description": "production server server"
+      "description": "production server"
     },
     {
       "url": "http://localhost:3333",
@@ -36,10 +36,13 @@
                       "type": "string",
                       "example": "server is running"
                     },
-
                     "documentation": {
                       "type": "string",
                       "example": "/docs"
+                    },
+                    "instanceId": {
+                      "type": "string",
+                      "example": "..."
                     }
                   }
                 }
@@ -49,7 +52,6 @@
         }
       }
     },
-
     "/posts/range": {
       "get": {
         "summary": "Find posts within a specific date range and sorted by a specific field.",
@@ -88,6 +90,26 @@
               "enum": ["ups", "commentsQuantity"],
               "example": "ups"
             }
+          },
+          {
+            "name": "postsQuantity",
+            "in": "query",
+            "required": false,
+            "description": "Number of posts you want to retrieve.",
+            "schema": {
+              "type": "integer",
+              "example": 100
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "description": "The current page number.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
           }
         ],
         "responses": {
@@ -96,34 +118,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "commentsQuantity": {
-                        "type": "integer",
-                        "description": "The number of comments on the post."
-                      },
-                      "ups": {
-                        "type": "integer",
-                        "description": "The number of up votes the post received."
-                      },
-                      "id": {
-                        "type": "string",
-                        "description": "The unique identifier of the post."
-                      },
-                      "authorFullName": {
-                        "type": "string",
-                        "description": "The full name of the post's author."
-                      },
-                      "title": {
-                        "type": "string",
-                        "description": "The title of the post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The creation date of the post (ISO format)."
+                  "type": "object",
+                  "properties": {
+                    "postsQuantity": {
+                      "type": "integer",
+                      "description": "The total number of posts returned.",
+                      "example": 50
+                    },
+                    "currentPage": {
+                      "type": "integer",
+                      "description": "The current page number.",
+                      "example": 1
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "commentsQuantity": {
+                            "type": "integer",
+                            "description": "The number of comments on the post."
+                          },
+                          "ups": {
+                            "type": "integer",
+                            "description": "The number of up votes the post received."
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier of the post."
+                          },
+                          "authorFullName": {
+                            "type": "string",
+                            "description": "The full name of the post's author."
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "The title of the post."
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The creation date of the post (ISO format)."
+                          }
+                        }
                       }
                     }
                   }
@@ -131,14 +168,13 @@
               }
             }
           },
-
           "404": {
-            "description": "no post was found in the range",
+            "description": "No post was found in the range.",
             "content": {
               "application/json": {
                 "examples": {
                   "invalid_date": {
-                    "summary": "no posts in range",
+                    "summary": "No posts in range",
                     "value": {
                       "error": "no post was found in the range"
                     }
@@ -147,7 +183,6 @@
               }
             }
           },
-
           "400": {
             "description": "Invalid request parameters.",
             "content": {
@@ -164,21 +199,19 @@
                       ]
                     }
                   },
-
                   "invalid_sortBy": {
                     "summary": "Invalid sortBy parameter",
                     "value": {
                       "error": [
                         {
                           "property": "sortBy",
-                          "message": "is missing property or sortBy must be either 'commentsQuantity' or 'ups' or is missing property"
+                          "message": "sortBy must be either 'commentsQuantity' or 'ups'"
                         }
                       ]
                     }
                   },
-
                   "required_parameters": {
-                    "summary": "required date parameters",
+                    "summary": "Required date parameters",
                     "value": {
                       "error": [
                         {
@@ -195,7 +228,6 @@
         }
       }
     },
-
     "/posts": {
       "get": {
         "summary": "Find many posts sorted by a specific field.",
@@ -212,6 +244,26 @@
               "enum": ["ups", "commentsQuantity"],
               "example": "ups"
             }
+          },
+          {
+            "name": "postsQuantity",
+            "in": "query",
+            "required": false,
+            "description": "Number of posts you want to retrieve.",
+            "schema": {
+              "type": "integer",
+              "example": 100
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "required": false,
+            "description": "The current page number.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
           }
         ],
         "responses": {
@@ -220,34 +272,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "commentsQuantity": {
-                        "type": "integer",
-                        "description": "The number of comments on the post."
-                      },
-                      "ups": {
-                        "type": "integer",
-                        "description": "The number of up votes the post received."
-                      },
-                      "id": {
-                        "type": "string",
-                        "description": "The unique identifier of the post."
-                      },
-                      "authorFullName": {
-                        "type": "string",
-                        "description": "The full name of the post's author."
-                      },
-                      "title": {
-                        "type": "string",
-                        "description": "The title of the post."
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The creation date of the post (ISO format)."
+                  "type": "object",
+                  "properties": {
+                    "postsQuantity": {
+                      "type": "integer",
+                      "description": "The total number of posts returned.",
+                      "example": 100
+                    },
+                    "currentPage": {
+                      "type": "integer",
+                      "description": "The current page number.",
+                      "example": 1
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "commentsQuantity": {
+                            "type": "integer",
+                            "description": "The number of comments on the post."
+                          },
+                          "ups": {
+                            "type": "integer",
+                            "description": "The number of up votes the post received."
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The unique identifier of the post."
+                          },
+                          "authorFullName": {
+                            "type": "string",
+                            "description": "The full name of the post's author."
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "The title of the post."
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The creation date of the post (ISO format)."
+                          }
+                        }
                       }
                     }
                   }
@@ -255,14 +322,13 @@
               }
             }
           },
-
           "404": {
-            "description": "no posts found",
+            "description": "No posts found.",
             "content": {
               "application/json": {
                 "examples": {
                   "invalid_date": {
-                    "summary": "no posts found",
+                    "summary": "No posts found",
                     "value": {
                       "error": "no posts found"
                     }
@@ -271,7 +337,6 @@
               }
             }
           },
-
           "400": {
             "description": "Invalid request parameters.",
             "content": {
@@ -283,7 +348,7 @@
                       "error": [
                         {
                           "property": "sortBy",
-                          "message": "is missing property or sortBy must be either 'commentsQuantity' or 'ups' or is missing property"
+                          "message": "sortBy must be either 'commentsQuantity' or 'ups'"
                         }
                       ]
                     }
