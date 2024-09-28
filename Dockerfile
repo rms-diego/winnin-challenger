@@ -21,6 +21,7 @@ RUN npm install --production
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/docs ./docs
+# COPY --from=builder /app/.env ./.env
 
 EXPOSE 3333
 
