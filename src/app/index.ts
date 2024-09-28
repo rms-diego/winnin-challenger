@@ -15,7 +15,11 @@ const app = fastify({ logger: loggerConfig, disableRequestLogging: true });
 const logger = app.log;
 
 app.register(helmet, { global: true });
-app.register(cors);
+app.register(cors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+});
 
 app.register(fastifyApiReference, {
   routePrefix: "/docs",
