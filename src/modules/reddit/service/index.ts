@@ -12,6 +12,7 @@ export class RedditService {
   constructor(private readonly redditRepository: RedditRepository) {}
 
   public fetchPostsFromReddit = async (): Promise<void> => {
+    console.log("\nstart data fetching from reddit");
     const res = await fetch("https://api.reddit.com/r/artificial/hot");
 
     const {
@@ -32,6 +33,7 @@ export class RedditService {
     });
 
     await this.redditRepository.createMany(serializedRedditPosts);
+    console.log("finish data fetching from reddit\n");
   };
 
   public findPostsInRange = async (
