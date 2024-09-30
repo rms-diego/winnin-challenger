@@ -12,28 +12,32 @@ export class RedditService {
   constructor(private readonly redditRepository: RedditRepository) {}
 
   public fetchPostsFromReddit = async (): Promise<void> => {
-    console.log("\nstart data fetching from reddit");
-    const res = await fetch("https://api.reddit.com/r/artificial/hot");
+    try {
+      console.log("\nstart data fetching from reddit");
+      const res = await fetch("https://api.reddit.com/r/artificial/hot");
 
-    const {
-      data: { children: redditData },
-    }: ResponseReddit = await res.json();
+      const {
+        data: { children: redditData },
+      }: ResponseReddit = await res.json();
 
-    const serializedRedditPosts = redditData.map((data) => {
-      const { data: dataSerialized } = redditChildrenSchema.parse(data);
-      const createdAtToMs = dataSerialized.created_utc * 1000;
+      const serializedRedditPosts = redditData.map((data) => {
+        const { data: dataSerialized } = redditChildrenSchema.parse(data);
+        const createdAtToMs = dataSerialized.created_utc * 1000;
 
-      return {
-        ups: dataSerialized.ups,
-        authorFullName: dataSerialized.author_fullname,
-        createdAt: new Date(createdAtToMs).toISOString(),
-        commentsQuantity: dataSerialized.num_comments,
-        title: dataSerialized.title,
-      };
-    });
+        return {
+          ups: dataSerialized.ups,
+          authorFullName: dataSerialized.author_fullname,
+          createdAt: new Date(createdAtToMs).toISOString(),
+          commentsQuantity: dataSerialized.num_comments,
+          title: dataSerialized.title,
+        };
+      });
 
-    await this.redditRepository.createMany(serializedRedditPosts);
-    console.log("finish data fetching from reddit\n");
+      await this.redditRepository.createMany(serializedRedditPosts);
+      console.log("finish data fetching from reddit\n");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   public findPostsInRange = async (
