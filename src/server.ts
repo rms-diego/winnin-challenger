@@ -20,10 +20,10 @@ async function main() {
   //   redditService.fetchPostsFromReddit(),
   // );
 
-  cron.schedule("*/1 * * * *", async () =>
-    redditService.fetchPostsFromReddit(),
-  );
-  // cron.schedule("0 0 * * *", async () => redditService.fetchPostsFromReddit());
+  // cron.schedule("*/1 * * * *", async () =>
+  //   redditService.fetchPostsFromReddit(),
+  // );
+  cron.schedule("0 0 * * *", async () => redditService.fetchPostsFromReddit());
 }
 
 main();
